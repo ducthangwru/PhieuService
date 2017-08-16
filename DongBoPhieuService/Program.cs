@@ -17,7 +17,7 @@ namespace DongBoPhieuService
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new Service1()
+            new DBPhieuService()
             };
             ServiceBase.Run(ServicesToRun);
         }

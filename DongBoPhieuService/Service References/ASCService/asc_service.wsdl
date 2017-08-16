@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="UpdatePhieu">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ten_dn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mat_khau" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="kieu_nhap" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ma_phieu" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ma_kho" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ngay_tn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="gio_tn" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="loai_tn" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ngay_ht" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="gio_ht" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nguoi_tn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ten_kh" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="di_dong" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="co_dinh" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dia_chi" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ma_tinh" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ma_huyen" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ma_xa" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ma_ht" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mota_loi" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="serial" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="kieu_phieu" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ma_bd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ghi_chu" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="trang_thai" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdatePhieuResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdatePhieuResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateVOC">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ten_dn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mat_khau" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="kieu_nhap" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ma_voc" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ma_phieu" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="user_name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ngay_voc" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="gio_voc" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="noi_dung" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="kieu_voc" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="muc_do" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="trang_thai" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateVOCResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateVOCResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateLichHen">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ten_dn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mat_khau" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ma_phieu" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="noi_dung" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateLichHenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateLichHenResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="UpdatePhieuSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdatePhieu" />
+  </wsdl:message>
+  <wsdl:message name="UpdatePhieuSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdatePhieuResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateVOCSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateVOC" />
+  </wsdl:message>
+  <wsdl:message name="UpdateVOCSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateVOCResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateLichHenSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateLichHen" />
+  </wsdl:message>
+  <wsdl:message name="UpdateLichHenSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateLichHenResponse" />
+  </wsdl:message>
+  <wsdl:portType name="asc_serviceSoap">
+    <wsdl:operation name="UpdatePhieu">
+      <wsdl:input message="tns:UpdatePhieuSoapIn" />
+      <wsdl:output message="tns:UpdatePhieuSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateVOC">
+      <wsdl:input message="tns:UpdateVOCSoapIn" />
+      <wsdl:output message="tns:UpdateVOCSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateLichHen">
+      <wsdl:input message="tns:UpdateLichHenSoapIn" />
+      <wsdl:output message="tns:UpdateLichHenSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="asc_serviceSoap" type="tns:asc_serviceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UpdatePhieu">
+      <soap:operation soapAction="http://tempuri.org/UpdatePhieu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateVOC">
+      <soap:operation soapAction="http://tempuri.org/UpdateVOC" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateLichHen">
+      <soap:operation soapAction="http://tempuri.org/UpdateLichHen" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="asc_serviceSoap12" type="tns:asc_serviceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UpdatePhieu">
+      <soap12:operation soapAction="http://tempuri.org/UpdatePhieu" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateVOC">
+      <soap12:operation soapAction="http://tempuri.org/UpdateVOC" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateLichHen">
+      <soap12:operation soapAction="http://tempuri.org/UpdateLichHen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="asc_service">
+    <wsdl:port name="asc_serviceSoap" binding="tns:asc_serviceSoap">
+      <soap:address location="http://asc2.kangaroo.vn/asc_service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="asc_serviceSoap12" binding="tns:asc_serviceSoap12">
+      <soap12:address location="http://asc2.kangaroo.vn/asc_service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,10 +1,9 @@
 ﻿namespace DongBoPhieuService
 {
-    partial class Service1
-    {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
+    partial class DBPhieuService
+    { /// <summary> 
+      /// Required designer variable.
+      /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
@@ -28,10 +27,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.ServiceName = "Service1";
+            this.eventLog1 = new System.Diagnostics.EventLog();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
+            // 
+            // proSV_ALL
+            // 
+            this.ServiceName = "DongBoPhieuService";
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
         }
 
         #endregion
+        private System.Diagnostics.EventLog eventLog1;
     }
 }
