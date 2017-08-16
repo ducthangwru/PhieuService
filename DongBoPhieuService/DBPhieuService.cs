@@ -56,7 +56,7 @@ namespace DongBoPhieuService
 
                 try
                 {
-
+                    
                     DataTable dt01 = db3.ExecuteQueryDataSet("select * from PhieuSuaChua_Current  where iFlag = 0", CommandType.Text, null);
                     DataTable dt02 = db3.ExecuteQueryDataSet("select * from PhieuVOC_IH_Curent where iFlag = 0", CommandType.Text, null);
                     DataTable dt03 = db3.ExecuteQueryDataSet("select * from PhieuTuVanBaoDuong_Current where iFlag = 0", CommandType.Text, null);
