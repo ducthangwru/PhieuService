@@ -16,14 +16,27 @@ namespace DongBoPhieuService
     partial class DBPhieuService : ServiceBase
     {
         private static Log_Sytems logs = new Log_Sytems();
+
+        public int soPhieuIH = 0;
+        public int soPhieuBI = 0;
+        public int soPhieuVOC = 0;
+
+        public int soPhieuIHFail = 0;
+        public int soPhieuBIFail = 0;
+        public int soPhieuVOCFail = 0;
+
+        public int idDongBoIH = 0;
+        public int idDongBoBI = 0;
+        public int idDongBoVOC = 0;
+
+        public string timeDongBo = "";
+
         private int typeRun = 0;
         private static string strConnect1 = ConfigurationManager.AppSettings["ConnectASC"].ToString();
         private static string strConnect2 = ConfigurationManager.AppSettings["Connect31"].ToString();
         private static string strConnect3 = ConfigurationManager.AppSettings["Connect"].ToString();
         bool stopping_GetData = false;
         ASCService.asc_serviceSoapClient client2 = new ASCService.asc_serviceSoapClient();
-        private static DataAccess db2 = new DataAccess(strConnect2);
-        private static DataAccess db1 = new DataAccess(strConnect1);
         private static DataAccess db3 = new DataAccess(ConfigurationManager.AppSettings["Connect"].ToString());
 
         ManualResetEvent stoppedEvent;
@@ -46,13 +59,14 @@ namespace DongBoPhieuService
             // Periodically check if the service is stopping.
             logs.ErrorLog("DongBoPhieuService GetData Begin loop", "");
 
-
             string err = "";
 
 
             while (!this.stopping_GetData)
             {
                 // Perform main service function here...
+
+                timeDongBo = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
                 try
                 {
@@ -63,30 +77,76 @@ namespace DongBoPhieuService
 
                     if (dt01.Rows.Count > 0)
                     {
+                        soPhieuIH = 0;
+                        soPhieuIHFail = 0;
+                        List<SqlParameter> param = new List<SqlParameter>();
+                        param.Add(new SqlParameter("@tongsophieu", dt01.Rows.Count));
+
+                        idDongBoIH = int.Parse(db3.MyExecuteScalar("usp_Service_ThemBaoCaoPhieuSuaChua", CommandType.StoredProcedure, ref err, param).ToString());
 
                         foreach (DataRow dr in dt01.Rows)
                         {
                             UpdatePhieuBH(dr);
                             // UpdatePhieuVOCIH(dr);
                         }
+
+                        List<SqlParameter> param1 = new List<SqlParameter>();
+                        param1.Add( new SqlParameter("@iddongbo", idDongBoIH));
+                        param1.Add(new SqlParameter("@sophieuthanhcong", soPhieuIH));
+                        param1.Add(new SqlParameter("@sophieuthatbai", soPhieuIHFail));
+
+                        db3.MyExecuteNonQuery("usp_Service_UpdateBaoCaoPhieuSuaChua", CommandType.StoredProcedure, ref err, param1);
                     }
 
+
+                    
                     if (dt02.Rows.Count > 0)
                     {
+                        soPhieuVOC = 0;
+                        soPhieuVOCFail = 0;
+                        List<SqlParameter> param = new List<SqlParameter>();
+                        param.Add(new SqlParameter("@tongsophieu", dt02.Rows.Count));
+
+                        idDongBoVOC = int.Parse(db3.MyExecuteScalar("usp_Service_ThemBaoCaoPhieuVOCIH", CommandType.StoredProcedure, ref err, param).ToString());
+
+
                         foreach (DataRow dr in dt02.Rows)
                         {
                             //if (!UpdatePhieuBH(dr))
                             //    MessageBox.Show("false");
                             UpdatePhieuVOCIH(dr);
                         }
+
+                        List<SqlParameter> param1 = new List<SqlParameter>();
+                        param1.Add(new SqlParameter("@iddongbo", idDongBoVOC));
+                        param1.Add(new SqlParameter("@sophieuthanhcong", soPhieuVOC));
+                        param1.Add(new SqlParameter("@sophieuthatbai", soPhieuVOCFail));
+
+                        db3.MyExecuteNonQuery("usp_Service_UpdateBaoCaoPhieuVOCIH", CommandType.StoredProcedure, ref err, param1);
                     }
+
+
 
                     if (dt03.Rows.Count > 0)
                     {
+                        soPhieuBI = 0;
+                        soPhieuBIFail = 0;
+                        List<SqlParameter> param = new List<SqlParameter>();
+                        param.Add(new SqlParameter("@tongsophieu", dt03.Rows.Count));
+
+                        idDongBoBI = int.Parse(db3.MyExecuteScalar("usp_Service_ThemBaoCaoPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param).ToString());
+
                         foreach (DataRow dr in dt03.Rows)
                         {
                             UpdatePhieuBI(dr);
                         }
+
+                        List<SqlParameter> param1 = new List<SqlParameter>();
+                        param1.Add(new SqlParameter("@iddongbo", idDongBoBI));
+                        param1.Add(new SqlParameter("@sophieuthanhcong", soPhieuBI));
+                        param1.Add(new SqlParameter("@sophieuthatbai", soPhieuBIFail));
+
+                        db3.MyExecuteNonQuery("usp_Service_UpdateBaoCaoPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param1);
                     }
 
                 }
@@ -138,6 +198,10 @@ namespace DongBoPhieuService
             string ghichu = dr["GhiChu"].ToString();
             int trangthai = int.Parse(dr["TrangThaiPhieu"].ToString());
             string goibaoduong = (dr["GoiBaoDuong"] != null) ? dr["GoiBaoDuong"].ToString() : "";
+            string sophieuBI = (dr["SoPhieuBI"] != null) ? dr["SoPhieuBI"].ToString() : "";
+            string manhomKH = (dr["MaNhomKH"] != null) ? dr["MaNhomKH"].ToString() : "";
+            string tel1  = (dr["SDTLienLac"] != null) ? dr["SDTLienLac"].ToString() : "";
+            string tel2 = (dr["SDTKTVSua"] != null) ? dr["SDTKTVSua"].ToString() : "";
 
             try
             {
@@ -148,16 +212,33 @@ namespace DongBoPhieuService
 
                 result = client2.UpdatePhieu(ten_dn, mat_khau, kieunhap, sophieu, makho,
                 ngaytiepnhan, giotiepnhan, loaitiepnhan, ngayhentra, giohentra,
-                nguoitn, tenkh, sdt, def, diachi, tinh, huyen, xa, maht, motaloi, serial, kieuphieu, goibaoduong, ghichu, trangthai);
+                nguoitn, tenkh, manhomKH, sdt, tel1, tel2, diachi, tinh, huyen, xa, maht, motaloi, serial, kieuphieu, goibaoduong, ghichu, trangthai);
             }
             catch (Exception ex)
             {
+                soPhieuIHFail++;
+
+                List<SqlParameter> param1 = new List<SqlParameter>();
+                param1.Add(new SqlParameter("@iddongbo", idDongBoIH));
+                param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
+                param1.Add(new SqlParameter("@trangthai", false));
+                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuSuaChua", CommandType.StoredProcedure, ref err, param1);
+
+                logs.ErrorLog(ex.StackTrace, ex.Message);
                 return false;
             }
 
 
             if (result == 200 || result == 201)
             {
+                soPhieuIH++;
+
+                List<SqlParameter> param1 = new List<SqlParameter>();
+                param1.Add(new SqlParameter("@iddongbo", idDongBoIH));
+                param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
+                param1.Add(new SqlParameter("@trangthai", true));
+                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuSuaChua", CommandType.StoredProcedure, ref err, param1);
+
                 try
                 {
                     List<SqlParameter> param = new List<SqlParameter>();
@@ -185,20 +266,37 @@ namespace DongBoPhieuService
                     param.Add(new SqlParameter("@ghichu", dr["GhiChu"].ToString()));
                     param.Add(new SqlParameter("@TrangThai", int.Parse(dr["TrangThaiPhieu"].ToString())));
                     param.Add(new SqlParameter("@GoiBaoDuong", dr["GoiBaoDuong"].ToString()));
+                    param.Add(new SqlParameter("@SoPhieuBI", dr["SoPhieuBI"].ToString()));
+                    param.Add(new SqlParameter("@SDTLienLac", dr["SDTLienLac"] != null ? dr["SDTLienLac"].ToString() : ""));
+                    param.Add(new SqlParameter("@SDTKTVSua", dr["SDTKTVSua"] != null ? dr["SDTKTVSua"].ToString() : ""));
+                    param.Add(new SqlParameter("@MaNhomKH", dr["MaNhomKH"] != null ? dr["MaNhomKH"].ToString() : ""));
+                    param.Add(new SqlParameter("@NoiDung", dr["NoiDung"] != null ? dr["NoiDung"].ToString() : ""));
 
                     if (db3.MyExecuteNonQuery("usp_Service_ThemPhieuBaoHanh", CommandType.StoredProcedure, ref err, param))
                     {
                         db3.MyExecuteNonQuery("delete PhieuSuaChua_Current where SoPhieu like '" + dr["SoPhieu"].ToString() + "'", CommandType.Text, ref err, null);
                     }
-
-
                 }
                 catch (Exception ex)
                 {
+                    logs.ErrorLog(ex.StackTrace, ex.Message);
                     return false;
-                    //lg.Error(ex);
                 }
             }
+            else
+            {
+                soPhieuIHFail++;
+
+                List<SqlParameter> param1 = new List<SqlParameter>();
+                param1.Add(new SqlParameter("@iddongbo", idDongBoIH));
+                param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
+                param1.Add(new SqlParameter("@trangthai", false));
+
+                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuSuaChua", CommandType.StoredProcedure, ref err, param1);
+
+                return false;
+            }
+
             return true;
         }
 
@@ -214,7 +312,7 @@ namespace DongBoPhieuService
             }
             catch (Exception ex)
             {
-
+               
             }
 
             try
@@ -227,24 +325,57 @@ namespace DongBoPhieuService
             }
             catch (Exception ex)
             {
+                soPhieuVOCFail++;
 
+                List<SqlParameter> param1 = new List<SqlParameter>();
+                param1.Add(new SqlParameter("@iddongbo", idDongBoVOC));
+                param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
+                param1.Add(new SqlParameter("@trangthai", false));
+                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuVOCIH", CommandType.StoredProcedure, ref err, param1);
+
+                return;
             }
 
             if (result == 200 || result == 201)
             {
-                List<SqlParameter> param = new List<SqlParameter>();
+                soPhieuVOC++;
 
-                param.Add(new SqlParameter("@SoPhieu", dr["SoPhieu"].ToString()));
-                param.Add(new SqlParameter("@SoPhieuIH", dr["SoPhieuIH"].ToString()));
-                param.Add(new SqlParameter("@KHPhanAnh", dr["KHPhanAnh"].ToString()));
-                param.Add(new SqlParameter("@GhiChu", dr["GhiChu"].ToString()));
-                param.Add(new SqlParameter("@TrangThai", dr["TrangThai"].ToString()));
-                param.Add(new SqlParameter("@PhieuChinh", bool.Parse(dr["PhieuChinh"].ToString())));
-                param.Add(new SqlParameter("@MucDo", int.Parse(dr["MucDo"].ToString())));
-                param.Add(new SqlParameter("@NgayGio", dr["NgayGio"].ToString()));
+                List<SqlParameter> param1 = new List<SqlParameter>();
+                param1.Add(new SqlParameter("@iddongbo", idDongBoVOC));
+                param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
+                param1.Add(new SqlParameter("@trangthai", true));
+                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuVOCIH", CommandType.StoredProcedure, ref err, param1);
 
-                if (db3.MyExecuteNonQuery("usp_Service_InsertOrUpdatePhieuVOC_IH", CommandType.StoredProcedure, ref err, param))
-                    db3.MyExecuteNonQuery("delete PhieuVOC_IH_Curent where SoPhieu like '" + dr["SoPhieu"].ToString() + "'", CommandType.Text, ref err, null);
+                try
+                {
+                    List<SqlParameter> param = new List<SqlParameter>();
+
+                    param.Add(new SqlParameter("@SoPhieu", dr["SoPhieu"].ToString()));
+                    param.Add(new SqlParameter("@SoPhieuIH", dr["SoPhieuIH"].ToString()));
+                    param.Add(new SqlParameter("@KHPhanAnh", dr["KHPhanAnh"].ToString()));
+                    param.Add(new SqlParameter("@GhiChu", dr["GhiChu"].ToString()));
+                    param.Add(new SqlParameter("@TrangThai", dr["TrangThai"].ToString()));
+                    param.Add(new SqlParameter("@PhieuChinh", bool.Parse(dr["PhieuChinh"].ToString())));
+                    param.Add(new SqlParameter("@MucDo", int.Parse(dr["MucDo"].ToString())));
+                    param.Add(new SqlParameter("@NgayGio", dr["NgayGio"].ToString()));
+
+                    if (db3.MyExecuteNonQuery("usp_Service_InsertOrUpdatePhieuVOC_IH", CommandType.StoredProcedure, ref err, param))
+                        db3.MyExecuteNonQuery("delete PhieuVOC_IH_Curent where SoPhieu like '" + dr["SoPhieu"].ToString() + "'", CommandType.Text, ref err, null);
+                }
+                catch(Exception ex)
+                {
+                    logs.ErrorLog(ex.StackTrace, ex.Message);
+                }
+            }
+            else
+            {
+                soPhieuVOCFail++;
+
+                List<SqlParameter> param1 = new List<SqlParameter>();
+                param1.Add(new SqlParameter("@iddongbo", idDongBoVOC));
+                param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
+                param1.Add(new SqlParameter("@trangthai", false));
+                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuVOCIH", CommandType.StoredProcedure, ref err, param1);
             }
         }
 
@@ -257,19 +388,40 @@ namespace DongBoPhieuService
                 result = client2.UpdatePhieu("asc.portal", "abc@123", 1, dr["SoPhieu"].ToString(), "",
                     DateTime.Parse(dr["NgayTiepNhan"].ToString()).ToString("dd/MM/yyyy"),
                     DateTime.Parse(dr["NgayTiepNhan"].ToString()).ToString("HH:mm:ss"),
-                     0, "", "", dr["NguoiTiepNhan"].ToString(), dr["TenKH"].ToString(), dr["SDT"].ToString(), "",
+                     0, "", "", dr["NguoiTiepNhan"].ToString(), dr["TenKH"].ToString(), "", dr["SDT"].ToString(), dr["SDTLienLac"].ToString(), dr["SDTKTVSua"].ToString(),
                      dr["DiaChi"].ToString(), dr["Tinh"].ToString(), dr["Huyen"].ToString(), dr["Xa"].ToString(), "", "", "", 2,
                      dr["GoiTuVan"].ToString(), dr["KHPhanAnh"].ToString(), int.Parse(dr["TrangThai"].ToString()));
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                soPhieuBIFail++;
+
+                List<SqlParameter> param1 = new List<SqlParameter>();
+                param1.Add(new SqlParameter("@iddongbo", idDongBoBI));
+                param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
+                param1.Add(new SqlParameter("@trangthai", false));
+                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param1);
+
+                logs.ErrorLog(ex.StackTrace, ex.Message);
+                return;
+            }
 
             if (result == 200 || result == 201)
+            {
+                soPhieuBI++;
+
+                List<SqlParameter> param1 = new List<SqlParameter>();
+                param1.Add(new SqlParameter("@iddongbo", idDongBoBI));
+                param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
+                param1.Add(new SqlParameter("@trangthai", true));
+                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param1);
+
                 try
                 {
                     List<SqlParameter> param = new List<SqlParameter>();
                     param.Add(new SqlParameter("@SoPhieu", dr["SoPhieu"].ToString()));
                     param.Add(new SqlParameter("@NgayTiepNhan", dr["NgayTiepNhan"].ToString()));
-                    param.Add(new SqlParameter("@NguoiTiepNhan", int.Parse(dr["NguoiTiepNhan"].ToString())));
+                    param.Add(new SqlParameter("@NguoiTiepNhan", dr["NguoiTiepNhan"].ToString()));
                     param.Add(new SqlParameter("@DonVi", dr["DonVi"].ToString()));
                     param.Add(new SqlParameter("@SDT", dr["SDT"].ToString()));
                     param.Add(new SqlParameter("@TenKH", dr["TenKH"].ToString()));
@@ -277,21 +429,38 @@ namespace DongBoPhieuService
                     param.Add(new SqlParameter("@Tinh", dr["Tinh"].ToString()));
                     param.Add(new SqlParameter("@Huyen", dr["Huyen"].ToString()));
                     param.Add(new SqlParameter("@Xa", dr["Xa"].ToString()));
-                    param.Add(new SqlParameter("@DTV", int.Parse(dr["DTV"].ToString())));
+                    param.Add(new SqlParameter("@DTV", !string.IsNullOrEmpty(dr["DTV"].ToString()) ? int.Parse(dr["DTV"].ToString()) : 0));
                     param.Add(new SqlParameter("@KTV", dr["KTV"].ToString()));
                     param.Add(new SqlParameter("@GoiTuVan", dr["GoiTuVan"].ToString()));
                     param.Add(new SqlParameter("@TrangThai", dr["TrangThai"].ToString()));
                     param.Add(new SqlParameter("@KHPhanAnh", dr["KHPhanAnh"].ToString()));
                     param.Add(new SqlParameter("@NgayKy", dr["NgayKy"].ToString()));
                     param.Add(new SqlParameter("@NgayKetThuc", dr["NgayKetThuc"].ToString()));
+                    param.Add(new SqlParameter("@SDTLienLac", dr["SDTLienLac"].ToString()));
+                    param.Add(new SqlParameter("@SDTKTVSua", dr["SDTKTVSua"].ToString()));
+                    param.Add(new SqlParameter("@GhiChu", dr["GhiChu"].ToString()));
+                    param.Add(new SqlParameter("@SoHopDong", dr["SoHopDong"].ToString()));
 
                     if (db3.MyExecuteNonQuery("usp_Service_UpdatePhieuTuVanBaoDuong", CommandType.StoredProcedure, ref err, param))
                         db3.MyExecuteNonQuery("delete PhieuTuVanBaoDuong_Current where SoPhieu like '" + dr["SoPhieu"].ToString() + "'", CommandType.Text, ref err, null);
                 }
                 catch (Exception ex)
                 {
-
+                    logs.ErrorLog(ex.StackTrace, ex.Message);
                 }
+            }
+            else
+            {
+
+                soPhieuBIFail++;
+
+                List<SqlParameter> param1 = new List<SqlParameter>();
+                param1.Add(new SqlParameter("@iddongbo", idDongBoBI));
+                param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
+                param1.Add(new SqlParameter("@trangthai", false));
+                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param1);
+            }
+               
         }
 
         protected override void OnStart(string[] args)

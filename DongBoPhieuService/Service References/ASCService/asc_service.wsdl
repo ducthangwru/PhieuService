@@ -17,8 +17,10 @@
             <s:element minOccurs="0" maxOccurs="1" name="gio_ht" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="nguoi_tn" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="ten_kh" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ma_nkh" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="di_dong" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="co_dinh" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tel_1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tel_2" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="dia_chi" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="ma_tinh" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="ma_huyen" type="s:string" />
