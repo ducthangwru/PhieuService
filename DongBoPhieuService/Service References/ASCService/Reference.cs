@@ -73,72 +73,81 @@ namespace DongBoPhieuService.ASCService {
         public string ma_phieu;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
-        public string ma_kho;
+        public string maphieu_mt;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
-        public string ngay_tn;
+        public string ma_kho;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=6)]
+        public string ngay_tn;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=7)]
         public string gio_tn;
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
         public int loai_tn;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=8)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=9)]
         public string ngay_ht;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=9)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=10)]
         public string gio_ht;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=10)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=11)]
         public string nguoi_tn;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=11)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=12)]
         public string ten_kh;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=12)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=13)]
         public string ma_nkh;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=13)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=14)]
         public string di_dong;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=14)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=15)]
         public string tel_1;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=15)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=16)]
         public string tel_2;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=16)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=17)]
         public string dia_chi;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=17)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=18)]
         public string ma_tinh;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=18)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=19)]
         public string ma_huyen;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=19)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=20)]
         public string ma_xa;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=20)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=21)]
         public string ma_ht;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=21)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=22)]
         public string mota_loi;
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=22)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=23)]
         public string serial;
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=23)]
-        public int kieu_phieu;
-        
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=24)]
-        public string ma_bd;
+        public string ma_nh;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=25)]
-        public string ghi_chu;
+        public string model;
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=26)]
+        public int kieu_phieu;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=27)]
+        public string ma_bd;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=28)]
+        public string ghi_chu;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=29)]
         public int trang_thai;
         
         public UpdatePhieuRequestBody() {
@@ -149,6 +158,7 @@ namespace DongBoPhieuService.ASCService {
                     string mat_khau, 
                     int kieu_nhap, 
                     string ma_phieu, 
+                    string maphieu_mt, 
                     string ma_kho, 
                     string ngay_tn, 
                     string gio_tn, 
@@ -168,6 +178,8 @@ namespace DongBoPhieuService.ASCService {
                     string ma_ht, 
                     string mota_loi, 
                     string serial, 
+                    string ma_nh, 
+                    string model, 
                     int kieu_phieu, 
                     string ma_bd, 
                     string ghi_chu, 
@@ -176,6 +188,7 @@ namespace DongBoPhieuService.ASCService {
             this.mat_khau = mat_khau;
             this.kieu_nhap = kieu_nhap;
             this.ma_phieu = ma_phieu;
+            this.maphieu_mt = maphieu_mt;
             this.ma_kho = ma_kho;
             this.ngay_tn = ngay_tn;
             this.gio_tn = gio_tn;
@@ -195,6 +208,8 @@ namespace DongBoPhieuService.ASCService {
             this.ma_ht = ma_ht;
             this.mota_loi = mota_loi;
             this.serial = serial;
+            this.ma_nh = ma_nh;
+            this.model = model;
             this.kieu_phieu = kieu_phieu;
             this.ma_bd = ma_bd;
             this.ghi_chu = ghi_chu;
@@ -465,6 +480,7 @@ namespace DongBoPhieuService.ASCService {
                     string mat_khau, 
                     int kieu_nhap, 
                     string ma_phieu, 
+                    string maphieu_mt, 
                     string ma_kho, 
                     string ngay_tn, 
                     string gio_tn, 
@@ -484,6 +500,8 @@ namespace DongBoPhieuService.ASCService {
                     string ma_ht, 
                     string mota_loi, 
                     string serial, 
+                    string ma_nh, 
+                    string model, 
                     int kieu_phieu, 
                     string ma_bd, 
                     string ghi_chu, 
@@ -494,6 +512,7 @@ namespace DongBoPhieuService.ASCService {
             inValue.Body.mat_khau = mat_khau;
             inValue.Body.kieu_nhap = kieu_nhap;
             inValue.Body.ma_phieu = ma_phieu;
+            inValue.Body.maphieu_mt = maphieu_mt;
             inValue.Body.ma_kho = ma_kho;
             inValue.Body.ngay_tn = ngay_tn;
             inValue.Body.gio_tn = gio_tn;
@@ -513,6 +532,8 @@ namespace DongBoPhieuService.ASCService {
             inValue.Body.ma_ht = ma_ht;
             inValue.Body.mota_loi = mota_loi;
             inValue.Body.serial = serial;
+            inValue.Body.ma_nh = ma_nh;
+            inValue.Body.model = model;
             inValue.Body.kieu_phieu = kieu_phieu;
             inValue.Body.ma_bd = ma_bd;
             inValue.Body.ghi_chu = ghi_chu;
@@ -531,6 +552,7 @@ namespace DongBoPhieuService.ASCService {
                     string mat_khau, 
                     int kieu_nhap, 
                     string ma_phieu, 
+                    string maphieu_mt, 
                     string ma_kho, 
                     string ngay_tn, 
                     string gio_tn, 
@@ -550,6 +572,8 @@ namespace DongBoPhieuService.ASCService {
                     string ma_ht, 
                     string mota_loi, 
                     string serial, 
+                    string ma_nh, 
+                    string model, 
                     int kieu_phieu, 
                     string ma_bd, 
                     string ghi_chu, 
@@ -560,6 +584,7 @@ namespace DongBoPhieuService.ASCService {
             inValue.Body.mat_khau = mat_khau;
             inValue.Body.kieu_nhap = kieu_nhap;
             inValue.Body.ma_phieu = ma_phieu;
+            inValue.Body.maphieu_mt = maphieu_mt;
             inValue.Body.ma_kho = ma_kho;
             inValue.Body.ngay_tn = ngay_tn;
             inValue.Body.gio_tn = gio_tn;
@@ -579,6 +604,8 @@ namespace DongBoPhieuService.ASCService {
             inValue.Body.ma_ht = ma_ht;
             inValue.Body.mota_loi = mota_loi;
             inValue.Body.serial = serial;
+            inValue.Body.ma_nh = ma_nh;
+            inValue.Body.model = model;
             inValue.Body.kieu_phieu = kieu_phieu;
             inValue.Body.ma_bd = ma_bd;
             inValue.Body.ghi_chu = ghi_chu;
