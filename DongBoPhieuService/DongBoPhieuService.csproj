@@ -89,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Service References\ASCService\asc_service.wsdl" />
+    <None Include="Service References\ASCService\asc_service1.wsdl" />
     <None Include="Service References\ASCService\DongBoPhieuService.ASCService.UpdateLichHenResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -105,9 +105,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ASCService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ASCService\asc_service.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ASCService\configuration91.svcinfo" />
@@ -132,6 +129,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ASCService\asc_service1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

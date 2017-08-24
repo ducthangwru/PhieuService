@@ -22,8 +22,8 @@
     <MetadataSource Address="http://asc2.kangaroo.vn/asc_service.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="asc_service.wsdl" MetadataType="Wsdl" ID="272516ec-0562-4541-ba3e-b0baf32b76b8" SourceId="1" SourceUrl="http://asc2.kangaroo.vn/asc_service.asmx?wsdl" />
-    <MetadataFile FileName="asc_service.disco" MetadataType="Disco" ID="c9e0ff0d-6892-4c21-8661-46fcbc656897" SourceId="1" SourceUrl="http://asc2.kangaroo.vn/asc_service.asmx?disco" />
+    <MetadataFile FileName="asc_service1.wsdl" MetadataType="Wsdl" ID="c127ddd0-6ceb-476e-90fb-5b8cb74d50b1" SourceId="1" SourceUrl="http://asc2.kangaroo.vn/asc_service.asmx?wsdl" />
+    <MetadataFile FileName="asc_service1.disco" MetadataType="Disco" ID="b2fda41b-d00c-4909-909c-81d8abece562" SourceId="1" SourceUrl="http://asc2.kangaroo.vn/asc_service.asmx?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

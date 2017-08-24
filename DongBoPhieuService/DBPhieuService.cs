@@ -32,12 +32,11 @@ namespace DongBoPhieuService
         public string timeDongBo = "";
 
         private int typeRun = 0;
-        private static string strConnect1 = ConfigurationManager.AppSettings["ConnectASC"].ToString();
-        private static string strConnect2 = ConfigurationManager.AppSettings["Connect31"].ToString();
-        private static string strConnect3 = ConfigurationManager.AppSettings["Connect"].ToString();
+        private static string strConnect125 = ConfigurationManager.AppSettings["Connect125"].ToString();
         bool stopping_GetData = false;
         ASCService.asc_serviceSoapClient client2 = new ASCService.asc_serviceSoapClient();
-        private static DataAccess db3 = new DataAccess(ConfigurationManager.AppSettings["Connect"].ToString());
+        private static DataAccess db125 = new DataAccess(ConfigurationManager.AppSettings["Connect125"].ToString());
+        private static DataAccess db32 = new DataAccess(ConfigurationManager.AppSettings["Connect32"].ToString());
 
         ManualResetEvent stoppedEvent;
 
@@ -71,9 +70,9 @@ namespace DongBoPhieuService
                 try
                 {
                     
-                    DataTable dt01 = db3.ExecuteQueryDataSet("select * from PhieuSuaChua_Current", CommandType.Text, null);
-                    DataTable dt02 = db3.ExecuteQueryDataSet("select * from PhieuVOC_Phieu_Current", CommandType.Text, null);
-                    DataTable dt03 = db3.ExecuteQueryDataSet("select * from PhieuTuVanBaoDuong_Current", CommandType.Text, null);
+                    DataTable dt01 = db32.ExecuteQueryDataSet("select * from PhieuSuaChua_Current", CommandType.Text, null);
+                    DataTable dt02 = db32.ExecuteQueryDataSet("select * from PhieuVOC_Phieu_Current", CommandType.Text, null);
+                    DataTable dt03 = db32.ExecuteQueryDataSet("select * from PhieuTuVanBaoDuong_Current", CommandType.Text, null);
 
                     if (dt01.Rows.Count > 0)
                     {
@@ -82,7 +81,7 @@ namespace DongBoPhieuService
                         List<SqlParameter> param = new List<SqlParameter>();
                         param.Add(new SqlParameter("@tongsophieu", dt01.Rows.Count));
 
-                        idDongBoIH = int.Parse(db3.MyExecuteScalar("usp_Service_ThemBaoCaoPhieuSuaChua", CommandType.StoredProcedure, ref err, param).ToString());
+                        idDongBoIH = int.Parse(db32.MyExecuteScalar("usp_Service_ThemBaoCaoPhieuSuaChua", CommandType.StoredProcedure, ref err, param).ToString());
 
                         foreach (DataRow dr in dt01.Rows)
                         {
@@ -95,7 +94,7 @@ namespace DongBoPhieuService
                         param1.Add(new SqlParameter("@sophieuthanhcong", soPhieuIH));
                         param1.Add(new SqlParameter("@sophieuthatbai", soPhieuIHFail));
 
-                        db3.MyExecuteNonQuery("usp_Service_UpdateBaoCaoPhieuSuaChua", CommandType.StoredProcedure, ref err, param1);
+                        db32.MyExecuteNonQuery("usp_Service_UpdateBaoCaoPhieuSuaChua", CommandType.StoredProcedure, ref err, param1);
                     }
 
 
@@ -107,7 +106,7 @@ namespace DongBoPhieuService
                         List<SqlParameter> param = new List<SqlParameter>();
                         param.Add(new SqlParameter("@tongsophieu", dt02.Rows.Count));
 
-                        idDongBoVOC = int.Parse(db3.MyExecuteScalar("usp_Service_ThemBaoCaoPhieuVOC", CommandType.StoredProcedure, ref err, param).ToString());
+                        idDongBoVOC = int.Parse(db32.MyExecuteScalar("usp_Service_ThemBaoCaoPhieuVOC", CommandType.StoredProcedure, ref err, param).ToString());
 
 
                         foreach (DataRow dr in dt02.Rows)
@@ -122,7 +121,7 @@ namespace DongBoPhieuService
                         param1.Add(new SqlParameter("@sophieuthanhcong", soPhieuVOC));
                         param1.Add(new SqlParameter("@sophieuthatbai", soPhieuVOCFail));
 
-                        db3.MyExecuteNonQuery("usp_Service_UpdateBaoCaoPhieuVOC", CommandType.StoredProcedure, ref err, param1);
+                        db32.MyExecuteNonQuery("usp_Service_UpdateBaoCaoPhieuVOC", CommandType.StoredProcedure, ref err, param1);
                     }
 
 
@@ -134,7 +133,7 @@ namespace DongBoPhieuService
                         List<SqlParameter> param = new List<SqlParameter>();
                         param.Add(new SqlParameter("@tongsophieu", dt03.Rows.Count));
 
-                        idDongBoBI = int.Parse(db3.MyExecuteScalar("usp_Service_ThemBaoCaoPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param).ToString());
+                        idDongBoBI = int.Parse(db32.MyExecuteScalar("usp_Service_ThemBaoCaoPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param).ToString());
 
                         foreach (DataRow dr in dt03.Rows)
                         {
@@ -146,7 +145,7 @@ namespace DongBoPhieuService
                         param1.Add(new SqlParameter("@sophieuthanhcong", soPhieuBI));
                         param1.Add(new SqlParameter("@sophieuthatbai", soPhieuBIFail));
 
-                        db3.MyExecuteNonQuery("usp_Service_UpdateBaoCaoPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param1);
+                        db32.MyExecuteNonQuery("usp_Service_UpdateBaoCaoPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param1);
                     }
 
                 }
@@ -224,7 +223,7 @@ namespace DongBoPhieuService
                 param1.Add(new SqlParameter("@iddongbo", idDongBoIH));
                 param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
                 param1.Add(new SqlParameter("@trangthai", false));
-                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuSuaChua", CommandType.StoredProcedure, ref err, param1);
+                db32.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuSuaChua", CommandType.StoredProcedure, ref err, param1);
 
                 logs.ErrorLog(ex.StackTrace, ex.Message);
                 return false;
@@ -239,7 +238,7 @@ namespace DongBoPhieuService
                 param1.Add(new SqlParameter("@iddongbo", idDongBoIH));
                 param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
                 param1.Add(new SqlParameter("@trangthai", true));
-                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuSuaChua", CommandType.StoredProcedure, ref err, param1);
+                db32.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuSuaChua", CommandType.StoredProcedure, ref err, param1);
 
                 try
                 {
@@ -274,9 +273,9 @@ namespace DongBoPhieuService
                     param.Add(new SqlParameter("@MaNhomKH", dr["MaNhomKH"] != null ? dr["MaNhomKH"].ToString() : ""));
                     param.Add(new SqlParameter("@NoiDung", dr["NoiDung"] != null ? dr["NoiDung"].ToString() : ""));
 
-                    if (db3.MyExecuteNonQuery("usp_Service_ThemPhieuBaoHanh", CommandType.StoredProcedure, ref err, param))
+                    if (db32.MyExecuteNonQuery("usp_Service_ThemPhieuBaoHanh", CommandType.StoredProcedure, ref err, param))
                     {
-                        db3.MyExecuteNonQuery("delete PhieuSuaChua_Current where SoPhieu like '" + dr["SoPhieu"].ToString() + "'", CommandType.Text, ref err, null);
+                        db32.MyExecuteNonQuery("delete PhieuSuaChua_Current where SoPhieu like '" + dr["SoPhieu"].ToString() + "'", CommandType.Text, ref err, null);
                     }
                 }
                 catch (Exception ex)
@@ -296,7 +295,7 @@ namespace DongBoPhieuService
                 param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
                 param1.Add(new SqlParameter("@trangthai", false));
 
-                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuSuaChua", CommandType.StoredProcedure, ref err, param1);
+                db32.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuSuaChua", CommandType.StoredProcedure, ref err, param1);
 
                 return false;
             }
@@ -312,7 +311,7 @@ namespace DongBoPhieuService
             string username = "";
             try
             {
-                username = db3.MyExecuteScalar("select PhanCongKTV from PhieuSuaChua_ASC where SoPhieu like '" + dr["SoPhieu"].ToString() + "'", CommandType.Text, ref err, null).ToString();
+                username = db32.MyExecuteScalar("select PhanCongKTV from PhieuSuaChua_ASC where SoPhieu like '" + dr["SoPhieu"].ToString() + "'", CommandType.Text, ref err, null).ToString();
             }
             catch (Exception ex)
             {
@@ -335,7 +334,7 @@ namespace DongBoPhieuService
                 param1.Add(new SqlParameter("@iddongbo", idDongBoVOC));
                 param1.Add(new SqlParameter("@sophieu", dr["SoPhieuVOC"].ToString()));
                 param1.Add(new SqlParameter("@trangthai", false));
-                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuVOC", CommandType.StoredProcedure, ref err, param1);
+                db32.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuVOC", CommandType.StoredProcedure, ref err, param1);
 
                 return;
             }
@@ -348,7 +347,7 @@ namespace DongBoPhieuService
                 param1.Add(new SqlParameter("@iddongbo", idDongBoVOC));
                 param1.Add(new SqlParameter("@sophieu", dr["SoPhieuVOC"].ToString()));
                 param1.Add(new SqlParameter("@trangthai", true));
-                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuVOC", CommandType.StoredProcedure, ref err, param1);
+                db32.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuVOC", CommandType.StoredProcedure, ref err, param1);
 
                 try
                 {
@@ -364,8 +363,8 @@ namespace DongBoPhieuService
                     param.Add(new SqlParameter("@NgayGio", dr["NgayGio"].ToString()));
                     param.Add(new SqlParameter("@NguoiGiaiTrinh", dr["NguoiGiaiTrinh"].ToString()));
 
-                    if (db3.MyExecuteNonQuery("usp_Service_InsertOrUpdatePhieuVOC", CommandType.StoredProcedure, ref err, param))
-                        db3.MyExecuteNonQuery("delete PhieuVOC_Phieu_Current where SoPhieuVOC like '" + dr["SoPhieuVOC"].ToString() + "'", CommandType.Text, ref err, null);
+                    if (db32.MyExecuteNonQuery("usp_Service_InsertOrUpdatePhieuVOC", CommandType.StoredProcedure, ref err, param))
+                        db32.MyExecuteNonQuery("delete PhieuVOC_Phieu_Current where SoPhieuVOC like '" + dr["SoPhieuVOC"].ToString() + "'", CommandType.Text, ref err, null);
                 }
                 catch(Exception ex)
                 {
@@ -382,7 +381,7 @@ namespace DongBoPhieuService
                 param1.Add(new SqlParameter("@iddongbo", idDongBoVOC));
                 param1.Add(new SqlParameter("@sophieu", dr["SoPhieuVOC"].ToString()));
                 param1.Add(new SqlParameter("@trangthai", false));
-                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuVOC", CommandType.StoredProcedure, ref err, param1);
+                db32.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuVOC", CommandType.StoredProcedure, ref err, param1);
             }
         }
 
@@ -407,7 +406,7 @@ namespace DongBoPhieuService
                 param1.Add(new SqlParameter("@iddongbo", idDongBoBI));
                 param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
                 param1.Add(new SqlParameter("@trangthai", false));
-                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param1);
+                db32.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param1);
 
                 logs.ErrorLog(ex.StackTrace, ex.Message);
                 return;
@@ -421,7 +420,7 @@ namespace DongBoPhieuService
                 param1.Add(new SqlParameter("@iddongbo", idDongBoBI));
                 param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
                 param1.Add(new SqlParameter("@trangthai", true));
-                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param1);
+                db32.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param1);
 
                 try
                 {
@@ -448,8 +447,8 @@ namespace DongBoPhieuService
                     param.Add(new SqlParameter("@GhiChu", dr["GhiChu"].ToString()));
                     param.Add(new SqlParameter("@SoHopDong", dr["SoHopDong"].ToString()));
 
-                    if (db3.MyExecuteNonQuery("usp_Service_UpdatePhieuTuVanBaoDuong", CommandType.StoredProcedure, ref err, param))
-                        db3.MyExecuteNonQuery("delete PhieuTuVanBaoDuong_Current where SoPhieu like '" + dr["SoPhieu"].ToString() + "'", CommandType.Text, ref err, null);
+                    if (db32.MyExecuteNonQuery("usp_Service_UpdatePhieuTuVanBaoDuong", CommandType.StoredProcedure, ref err, param))
+                        db32.MyExecuteNonQuery("delete PhieuTuVanBaoDuong_Current where SoPhieu like '" + dr["SoPhieu"].ToString() + "'", CommandType.Text, ref err, null);
                 }
                 catch (Exception ex)
                 {
@@ -465,7 +464,7 @@ namespace DongBoPhieuService
                 param1.Add(new SqlParameter("@iddongbo", idDongBoBI));
                 param1.Add(new SqlParameter("@sophieu", dr["SoPhieu"].ToString()));
                 param1.Add(new SqlParameter("@trangthai", false));
-                db3.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param1);
+                db32.MyExecuteNonQuery("usp_Service_ThemLichSuPhieuTVBaoDuong", CommandType.StoredProcedure, ref err, param1);
             }
                
         }
